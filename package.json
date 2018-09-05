@@ -1,0 +1,21 @@
+{
+  "name": "html2unicode",
+  "version": "1.0.0",
+  "description": "Convert HTML to unicode strings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "html",
+    "unicode",
+    "utf8",
+    "bold",
+    "italics"
+  ],
+  "author": "Ophir LOJKINE",
+  "license": "ISC",
+  "dependencies": {
+    "saxophone": "^0.4.0"
+  }
+}
