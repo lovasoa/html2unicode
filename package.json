@@ -5,7 +5,7 @@
   "repository": "https://github.com/lovasoa/html2unicode",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test.js",
+    "test": "node ./test/test.js",
     "jsdoc": "jsdoc2md src/*.js > api.md"
   },
   "keywords": [

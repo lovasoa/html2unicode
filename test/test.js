@@ -1,8 +1,10 @@
-const html2unicode = require('./index.js').html2unicode;
+const html2unicode = require('../src/index.js').html2unicode;
+
 const assert = require('assert');
 
 async function test(html, txt) {
 	const res = await html2unicode(html);
+	console.log(`"${html}" --> "${res}"`);
 	assert.strictEqual(res, txt);
 }
 
