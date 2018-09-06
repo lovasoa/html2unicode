@@ -77,6 +77,7 @@ function html2unicode(html) {
  *      // --> "𝚝𝚎𝚡𝚝"
  **/
 function transform(text, { bold, italics, mono, variable, sub, sup }) {
+	text = text.normalize("NFKD");
 	if (sub) text = subscript(text);
 	else if (sup) text = superscript(text);
 	else if (bold && italics) text = boldenAndItalicize(text);
