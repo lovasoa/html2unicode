@@ -4,7 +4,7 @@ const assert = require('assert');
 
 async function test(html, txt) {
 	const res = await html2unicode(html);
-	console.log(`"${html}" --> "${res}"`);
+	console.log(`${html}\t⟶\t${res}`);
 	assert.strictEqual(res, txt);
 }
 
