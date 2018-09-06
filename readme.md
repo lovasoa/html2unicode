@@ -39,7 +39,7 @@ async function test() {
 	console.log(result);
 }
 
-test() // This will display "";
+test() // This will display "𝗛𝗲𝗹𝗹𝗼, 𝙬𝙤𝙧𝙡𝙙!";
 ```
 
 ### Using old-style promise chaining
@@ -53,6 +53,6 @@ html2unicode
 	.html2unicode(htmlStr)
 	.then(function(str) {
 		console.log(str);
-		// This will display "";
+		// This will display "𝗛𝗲𝗹𝗹𝗼, 𝙬𝙤𝙧𝙡𝙙!";
 	});
 ```
