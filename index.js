@@ -40,6 +40,7 @@ function html2unicode(html) {
  **/
 function transform(text, {bold, italics}) {
 	if (bold) text = bolden(text);
+	else if (italics) text = italicize(text);
 	return text;
 }
 
@@ -85,6 +86,11 @@ CharTransform.boldenTransforms = [
 	new DigitTransform('𝟬'),
 ];
 
+CharTransform.italicizeTransform = [
+	new CapitalLetterTransform('𝘈'),
+	new SmallLetterTransform('𝘢'),
+];
+
 function transformator(transforms) {
 	return function transform(text) {
 		let codesBuffer = [];
@@ -99,7 +105,8 @@ function transformator(transforms) {
 }
 
 const bolden = transformator(CharTransform.boldenTransforms);
+const italicize = transformator(CharTransform.italicizeTransform);
 
 if (typeof module !== "undefined") {
-	module.exports = { html2unicode, transform, bolden };
+	module.exports = { html2unicode, transform, bolden, italicize };
 }
