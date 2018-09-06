@@ -5,6 +5,10 @@ special unicode characters to simulate rich text.
 
 It turns `Hello, <b>world</b>!` into `Hello, 𝘄𝗼𝗿𝗹𝗱!`.
 
+## Try it from your browser
+
+You can [try this library online](https://npm.runkit.com/html2unicode).
+
 ## Examples
 
 ```
