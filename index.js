@@ -45,11 +45,12 @@ function html2unicode(html) {
 /**
  * Transform a text into italics or bold
  **/
-function transform(text, { bold, italics, mono }) {
+function transform(text, { bold, italics, mono, variable }) {
 	if (bold && italics) text = boldenAndItalicize(text);
 	else if (bold) text = bolden(text);
 	else if (italics) text = italicize(text);
 	else if (mono) text = monospace(text);
+	else if (variable) text = scriptize(text);
 	return text;
 }
 
@@ -112,6 +113,11 @@ CharTransform.monospaceTransform = [
 	new DigitTransform('𝟶'),
 ];
 
+CharTransform.scriptizeTransform = [
+	new CapitalLetterTransform('𝓐'),
+	new SmallLetterTransform('𝓪'),
+];
+
 function transformator(transforms) {
 	return function transform(text) {
 		let codesBuffer = [];
@@ -129,7 +135,11 @@ const bolden = transformator(CharTransform.boldenTransforms);
 const italicize = transformator(CharTransform.italicizeTransform);
 const boldenAndItalicize = transformator(CharTransform.boldenAndItalicizeTransform);
 const monospace = transformator(CharTransform.monospaceTransform);
+const scriptize = transformator(CharTransform.scriptizeTransform);
 
 if (typeof module !== "undefined") {
-	module.exports = { html2unicode, transform, bolden, italicize, boldenAndItalicize, monospace };
+	module.exports = {
+		html2unicode, transform, bolden, italicize, boldenAndItalicize, monospace,
+		scriptize,
+	};
 }
