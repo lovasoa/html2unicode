@@ -34,7 +34,7 @@ See [the full documentation](api.md).
 const html2unicode = require("html2unicode");
 
 async function test() {
-	const htmlstr = "<b>Hello, <i>world</i></b>!";
+	const htmlStr = "<b>Hello, <i>world</i></b>!";
 	const result = await html2unicode.html2unicode(htmlStr);
 	console.log(result);
 }
