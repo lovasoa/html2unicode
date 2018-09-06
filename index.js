@@ -43,44 +43,62 @@ function transform(text, {bold, italics}) {
 	return text;
 }
 
-let charCodes = {};
-for(let l of ['a','z','A','Z','0','9']) {
-	charCodes[l] = l.charCodeAt(0);
-}
-charCodes.zero = charCodes['0'];
-charCodes.nine = charCodes['9'];
-
-function isCapitalLetter(code) {
-	return code >= charCodes.A && code <= charCodes.Z;
-}
-
-function isSmallLetter(code) {
-	return code >= charCodes.a && code <= charCodes.z;
-}
-
-function isNumber(code) {
-	return code >= charCodes.zero && code <= charCodes.nine;
-}
-
-function bolden(text) {
-	let codes = [];
-	for(let i=0; i<text.length; i++) {
-		let code = text.charCodeAt(i);
-		if (isCapitalLetter(code)) {
-			codes.push(0xD835);
-			codes.push(0xDDD4 + code - charCodes.A);
-		} else if (isSmallLetter(code)) {
-			codes.push(0xD835);
-			codes.push(0xDDEE + code - charCodes.a);
-		} else if (isNumber(code)) {
-			codes.push(0xD835);
-			codes.push(0xDFEC + code - charCodes.zero);
-		} else {
-			codes.push(code);
-		}
+class CharTransform {
+	constructor(startLetter, endLetter, startReplacement) {
+		this.startCode = startLetter.charCodeAt(0);
+		this.endCode = endLetter.charCodeAt(0);
+		this.surrogate = startReplacement.charCodeAt(0);
+		this.index = startReplacement.charCodeAt(1);
 	}
-	return String.fromCharCode(...codes);
+
+	matches(charCode) {
+		return charCode >= this.startCode && charCode <= this.endCode;
+	}
+
+	transform(charCode, buffer) {
+		buffer.push(this.surrogate);
+		buffer.push(this.index + charCode - this.startCode);
+	}
 }
+
+class SmallLetterTransform extends CharTransform {
+	constructor(startReplacement) {
+		super('a', 'z', startReplacement);
+	}
+}
+
+class CapitalLetterTransform extends CharTransform {
+	constructor(startReplacement) {
+		super('A', 'Z', startReplacement);
+	}
+}
+
+class DigitTransform extends CharTransform {
+	constructor(startReplacement) {
+		super('0', '9', startReplacement);
+	}
+}
+
+CharTransform.boldenTransforms = [
+	new CapitalLetterTransform('𝗔'),
+	new SmallLetterTransform('𝗮'),
+	new DigitTransform('𝟬'),
+];
+
+function transformator(transforms) {
+	return function transform(text) {
+		let codesBuffer = [];
+		for(let i=0; i<text.length; i++) {
+			let code = text.charCodeAt(i);
+			const transform = transforms.find(t => t.matches(code));
+			if (transform) transform.transform(code, codesBuffer);
+			else codesBuffer.push(code);
+		}
+		return String.fromCharCode(...codesBuffer);
+	};
+}
+
+const bolden = transformator(CharTransform.boldenTransforms);
 
 if (typeof module !== "undefined") {
 	module.exports = { html2unicode, transform, bolden };

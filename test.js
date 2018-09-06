@@ -16,3 +16,7 @@ test("<strong>Hello, world!</strong>", "𝗛𝗲𝗹𝗹𝗼, 𝘄𝗼𝗿𝗹�
 test("<strong>Hello, <b>world<b>!</b></b></strong>", "𝗛𝗲𝗹𝗹𝗼, 𝘄𝗼𝗿𝗹𝗱!");
 test("<b>по-русский</b>", "по-русский");
 test("<b>0123456789</b>", "𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵");
+
+// italics
+test("<i>HELLO</i>", "HELLO");
+test("<i>hello</i>", "hello");
