@@ -103,6 +103,7 @@ CharTransform.italicizeTransform = [
 CharTransform.boldenAndItalicizeTransform = [
 	new CapitalLetterTransform('𝘼'),
 	new SmallLetterTransform('𝙖'),
+	new DigitTransform('𝟬'), // There are no bold italics digits, use simple bold
 ];
 
 CharTransform.monospaceTransform = [

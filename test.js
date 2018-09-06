@@ -27,6 +27,7 @@ test("<i>0123456789</i>", "0123456789");
 // bold and italics combined
 test("<i><b>Hello, world!</b></i>", "𝙃𝙚𝙡𝙡𝙤, 𝙬𝙤𝙧𝙡𝙙!");
 test("normal <i>italics <b>bolditalics</b></i>", "normal 𝘪𝘵𝘢𝘭𝘪𝘤𝘴 𝙗𝙤𝙡𝙙𝙞𝙩𝙖𝙡𝙞𝙘𝙨");
+test("<i><b>0123456789</b></i>", "𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵");
 
 // monospace
 test("<pre>Hello, world!</pre>", "𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!");
