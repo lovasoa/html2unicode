@@ -39,7 +39,8 @@ function html2unicode(html) {
  * Transform a text into italics or bold
  **/
 function transform(text, {bold, italics}) {
-	if (bold) text = bolden(text);
+	if (bold && italics) text = boldenAndItalicize(text);
+	else if (bold) text = bolden(text);
 	else if (italics) text = italicize(text);
 	return text;
 }
@@ -91,6 +92,11 @@ CharTransform.italicizeTransform = [
 	new SmallLetterTransform('𝘢'),
 ];
 
+CharTransform.boldenAndItalicizeTransform = [
+	new CapitalLetterTransform('𝘼'),
+	new SmallLetterTransform('𝙖'),
+];
+
 function transformator(transforms) {
 	return function transform(text) {
 		let codesBuffer = [];
@@ -106,6 +112,7 @@ function transformator(transforms) {
 
 const bolden = transformator(CharTransform.boldenTransforms);
 const italicize = transformator(CharTransform.italicizeTransform);
+const boldenAndItalicize = transformator(CharTransform.boldenAndItalicizeTransform);
 
 if (typeof module !== "undefined") {
 	module.exports = { html2unicode, transform, bolden, italicize };

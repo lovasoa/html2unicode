@@ -22,3 +22,9 @@ test("<i>HELLO</i>", "𝘏𝘌𝘓𝘓𝘖");
 test("<i>hello</i>", "𝘩𝘦𝘭𝘭𝘰");
 test("<em>hello</em>", "𝘩𝘦𝘭𝘭𝘰");
 test("<i>0123456789</i>", "0123456789");
+
+
+// bold and italics combined
+test("<i><b>Hello, world!</b></i>", "𝙃𝙚𝙡𝙡𝙤, 𝙬𝙤𝙧𝙡𝙙!");
+test("normal <i>italics <b>bolditalics</b></i>", "normal 𝘪𝘵𝘢𝘭𝘪𝘤𝘴 𝙗𝙤𝙡𝙙𝙞𝙩𝙖𝙡𝙞𝙘𝙨");
+
