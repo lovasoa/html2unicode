@@ -30,7 +30,7 @@ See [the full documentation](api.md).
 
 ### Using ES6
 
-```
+```js
 const html2unicode = require("html2unicode");
 
 async function test() {
@@ -43,7 +43,8 @@ test() // This will display "";
 ```
 
 ### Using old-style promise chaining
-```
+
+```js
 var html2unicode = require("html2unicode");
 
 var htmlStr = "<b>Hello, <i>world</i></b>!";
