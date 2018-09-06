@@ -11,22 +11,20 @@ You can [try this library online](https://npm.runkit.com/html2unicode).
 
 ## Examples
 
-```
-"<b>Hello</b>" --> "𝗛𝗲𝗹𝗹𝗼"
-"<strong>Hello, world!</strong>" --> "𝗛𝗲𝗹𝗹𝗼, 𝘄𝗼𝗿𝗹𝗱!"
-"<b>0123456789</b>" --> "𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵"
-"<i>HELLO</i>" --> "𝘏𝘌𝘓𝘓𝘖"
-"<em>hello</em>" --> "𝘩𝘦𝘭𝘭𝘰"
-"<i>0123456789</i>" --> "0123456789"
-"<i><b>Hello, world!</b></i>" --> "𝙃𝙚𝙡𝙡𝙤, 𝙬𝙤𝙧𝙡𝙙!"
-"normal <i>italics <b>bolditalics</b></i>" --> "normal 𝘪𝘵𝘢𝘭𝘪𝘤𝘴 𝙗𝙤𝙡𝙙𝙞𝙩𝙖𝙡𝙞𝙘𝙨"
-"<pre>Hello, world!</pre>" --> "𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!"
-"<code>Hello, <b>world</b>!</code>" --> "𝙷𝚎𝚕𝚕𝚘, 𝘄𝗼𝗿𝗹𝗱!"
-"<code>007</code>" --> "𝟶𝟶𝟽"
-"<var>hello</var>" --> "𝓱𝓮𝓵𝓵𝓸"
-"<sub>0123456789</sub>" --> "₀₁₂₃₄₅₆₇₈₉"
-"<sup>0123456789+-=()ni</sup>" --> "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ⁿⁱ"
-```
+| html | html2unicode(html) |
+|------|--------------------|
+|`<b>Hello</b>` | 𝗛𝗲𝗹𝗹𝗼|
+|`<strong>Hello, world!</strong>` | 𝗛𝗲𝗹𝗹𝗼, 𝘄𝗼𝗿𝗹𝗱!|
+|`<em>hello</em>` | 𝘩𝘦𝘭𝘭𝘰|
+|`normal <i>italics <b>bolditalics</b></i>` | normal 𝘪𝘵𝘢𝘭𝘪𝘤𝘴 𝙗𝙤𝙡𝙙𝙞𝙩𝙖𝙡𝙞𝙘𝙨|
+|`<i><b>0123456789</b></i>` | 𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵|
+|`<pre>Hello, world!</pre>` | 𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!|
+|`<code>Hello, world!</code>` | 𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!|
+|`<code>Hello, <b>world</b>!</code>` | 𝙷𝚎𝚕𝚕𝚘, 𝘄𝗼𝗿𝗹𝗱!|
+|`<samp>007</samp>` | 𝟶𝟶𝟽|
+|`<var>hello</var>` | 𝓱𝓮𝓵𝓵𝓸|
+|`x<sub>2</sub>` | x₂|
+|`x<sup>(n+1)</sup>` | x⁽ⁿ⁺¹⁾ |
 
 ## API
 
