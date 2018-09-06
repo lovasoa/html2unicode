@@ -1,9 +1,10 @@
 {
   "name": "html2unicode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert HTML to unicode strings.",
   "repository": "https://github.com/lovasoa/html2unicode",
   "main": "src/index.js",
+  "runkitExampleFilename": "example.js",
   "scripts": {
     "test": "node ./test/test.js",
     "jsdoc": "jsdoc2md src/*.js > api.md"
