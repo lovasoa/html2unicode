@@ -32,4 +32,5 @@ test("normal <i>italics <b>bolditalics</b></i>", "normal 𝘪𝘵𝘢𝘭𝘪�
 test("<pre>Hello, world!</pre>", "𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!");
 test("<code>Hello, world!</code>", "𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!");
 test("<code>Hello, <b>world</b>!</code>", "𝙷𝚎𝚕𝚕𝚘, 𝘄𝗼𝗿𝗹𝗱!");
+test("<code>007</code>", "𝟶𝟶𝟽");
 

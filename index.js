@@ -108,6 +108,7 @@ CharTransform.boldenAndItalicizeTransform = [
 CharTransform.monospaceTransform = [
 	new CapitalLetterTransform('𝙰'),
 	new SmallLetterTransform('𝚊'),
+	new DigitTransform('𝟶'),
 ];
 
 function transformator(transforms) {
