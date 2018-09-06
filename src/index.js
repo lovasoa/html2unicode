@@ -1,7 +1,14 @@
 const Saxophone = require('saxophone');
 
 /**
- * Takes an html string and returns a Promise that resolves to an unicode string.
+ * Turns an html string into an unicode string.
+ *
+ * @param {string} html the source html
+ * @returns {Promise<String>} an unicode string.
+ *
+ * @example
+ *     await html2unicode("Hello, <b>world</b> !");
+ *     // --> "Hello, 𝘄𝗼𝗿𝗹𝗱!"
  **/
 function html2unicode(html) {
 	const chunks = [];
@@ -51,7 +58,23 @@ function html2unicode(html) {
 }
 
 /**
- * Transform a text into italics or bold
+ * Transforms a text according to the given options
+ * 
+ * @example
+ *     transform("world", {bold: true});
+ *      // --> "𝘄𝗼𝗿𝗹𝗱"
+ *
+ * @example
+ *     transform("world", {bold: true, italics: true});
+ *      // --> "𝙬𝙤𝙧𝙡𝙙"
+ *
+ * @example
+ *     transform("n", {sup: true});
+ *      // --> "ⁿ"
+ *
+ * @example
+ *     transform("text", {mono: true});
+ *      // --> "𝚝𝚎𝚡𝚝"
  **/
 function transform(text, { bold, italics, mono, variable, sub, sup }) {
 	if (sub) text = subscript(text);
