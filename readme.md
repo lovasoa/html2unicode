@@ -58,3 +58,12 @@ html2unicode
 		// This will display "𝗛𝗲𝗹𝗹𝗼, 𝙬𝙤𝙧𝙡𝙙!";
 	});
 ```
+
+## CLI
+
+This package offers a command-line interface.
+
+```bash
+$ npx html2unicode '<b>bold</b>'
+𝗯𝗼𝗹𝗱
+```
