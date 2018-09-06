@@ -47,6 +47,8 @@ let charCodes = {};
 for(let l of ['a','z','A','Z','0','9']) {
 	charCodes[l] = l.charCodeAt(0);
 }
+charCodes.zero = charCodes['0'];
+charCodes.nine = charCodes['9'];
 
 function isCapitalLetter(code) {
 	return code >= charCodes.A && code <= charCodes.Z;
@@ -54,6 +56,10 @@ function isCapitalLetter(code) {
 
 function isSmallLetter(code) {
 	return code >= charCodes.a && code <= charCodes.z;
+}
+
+function isNumber(code) {
+	return code >= charCodes.zero && code <= charCodes.nine;
 }
 
 function bolden(text) {
@@ -66,6 +72,9 @@ function bolden(text) {
 		} else if (isSmallLetter(code)) {
 			codes.push(0xD835);
 			codes.push(0xDDEE + code - charCodes.a);
+		} else if (isNumber(code)) {
+			codes.push(0xD835);
+			codes.push(0xDFEC + code - charCodes.zero);
 		} else {
 			codes.push(code);
 		}
