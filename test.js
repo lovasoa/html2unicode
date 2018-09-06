@@ -37,3 +37,7 @@ test("<code>007</code>", "𝟶𝟶𝟽");
 
 // variable
 test("<var>hello</var>", "𝓱𝓮𝓵𝓵𝓸");
+
+// subscript
+test("<sub>abcdefghijklmnopqrstuvwxyz</sub>", "ₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz");
+test("<sub>0123456789</sub>", "₀₁₂₃₄₅₆₇₈₉");

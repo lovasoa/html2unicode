@@ -7,8 +7,12 @@ function html2unicode(html) {
 	const chunks = [];
 	const parser = new Saxophone();
 	let tags = {
-		"i": 0, "b": 0, "em":0, "strong": 0, "pre": 0,
-		"code": 0, "tt": 0, "samp": 0, "kbd": 0, "var": 0,
+		"i": 0, "em":0,
+		"b":0, "strong": 0,
+		"pre": 0, "code": 0, "tt": 0, "samp": 0, "kbd": 0,
+		"var": 0,
+		"sub": 0,
+		"sup": 0,
 	};
 	parser.on('tagopen', ({ name, attrs, isSelfClosing }) => {
 		if (!isSelfClosing && tags.hasOwnProperty(name)) {
@@ -25,12 +29,16 @@ function html2unicode(html) {
 		italics: false,
 		mono: false,
 		variable: false,
+		sub: false,
+		sup: false,
 	};
 	parser.on('text', ({ contents }) => {
 		state.bold = tags.b>0 || tags.strong>0;
 		state.italics = tags.i>0 || tags.em>0;
 		state.mono = tags.code>0 || tags.tt>0 || tags.pre>0 || tags.samp>0 || tags.kbd>0;
 		state.variable = tags['var']>0;
+		state.sub = tags.sub>0;
+		state.sup = tags.sup>0;
 		chunks.push(transform(contents, state));
 	});
 	const result = new Promise((resolve, reject) => {
@@ -45,8 +53,9 @@ function html2unicode(html) {
 /**
  * Transform a text into italics or bold
  **/
-function transform(text, { bold, italics, mono, variable }) {
-	if (bold && italics) text = boldenAndItalicize(text);
+function transform(text, { bold, italics, mono, variable, sub }) {
+	if (sub) text = subscript(text);
+	else if (bold && italics) text = boldenAndItalicize(text);
 	else if (bold) text = bolden(text);
 	else if (italics) text = italicize(text);
 	else if (mono) text = monospace(text);
@@ -58,8 +67,7 @@ class CharTransform {
 	constructor(startLetter, endLetter, startReplacement) {
 		this.startCode = startLetter.charCodeAt(0);
 		this.endCode = endLetter.charCodeAt(0);
-		this.surrogate = startReplacement.charCodeAt(0);
-		this.index = startReplacement.charCodeAt(1);
+		this.replacementCodes = startReplacement.split('').map(c => c.charCodeAt(0));
 	}
 
 	matches(charCode) {
@@ -67,8 +75,8 @@ class CharTransform {
 	}
 
 	transform(charCode, buffer) {
-		buffer.push(this.surrogate);
-		buffer.push(this.index + charCode - this.startCode);
+		buffer.push(...this.replacementCodes);
+		buffer[buffer.length-1] += charCode - this.startCode;
 	}
 }
 
@@ -87,6 +95,12 @@ class CapitalLetterTransform extends CharTransform {
 class DigitTransform extends CharTransform {
 	constructor(startReplacement) {
 		super('0', '9', startReplacement);
+	}
+}
+
+class SingleCharTransform extends CharTransform {
+	constructor(origin, transformed) {
+		super(origin, origin, transformed);
 	}
 }
 
@@ -118,6 +132,23 @@ CharTransform.scriptizeTransform = [
 	new SmallLetterTransform('𝓪'),
 ];
 
+CharTransform.subscriptTransform = [
+	new DigitTransform('₀'),
+	new SingleCharTransform('a', 'ₐ'),
+	new SingleCharTransform('e', 'ₑ'),
+	new SingleCharTransform('h', 'ₕ'),
+	new SingleCharTransform('i', 'ᵢ'),
+	new SingleCharTransform('j', 'ⱼ'),
+	new CharTransform('k', 'n', 'ₖ'),
+	new SingleCharTransform('o', 'ₒ'),
+	new SingleCharTransform('p', 'ₚ'),
+	new SingleCharTransform('r', 'ᵣ'),
+	new CharTransform('s', 't', 'ₛ'),
+	new SingleCharTransform('u', 'ᵤ'),
+	new SingleCharTransform('v', 'ᵥ'),
+	new SingleCharTransform('x', 'ₓ'),
+];
+
 function transformator(transforms) {
 	return function transform(text) {
 		let codesBuffer = [];
@@ -136,10 +167,11 @@ const italicize = transformator(CharTransform.italicizeTransform);
 const boldenAndItalicize = transformator(CharTransform.boldenAndItalicizeTransform);
 const monospace = transformator(CharTransform.monospaceTransform);
 const scriptize = transformator(CharTransform.scriptizeTransform);
+const subscript = transformator(CharTransform.subscriptTransform);
 
 if (typeof module !== "undefined") {
 	module.exports = {
 		html2unicode, transform, bolden, italicize, boldenAndItalicize, monospace,
-		scriptize,
+		scriptize, subscript, 
 	};
 }
