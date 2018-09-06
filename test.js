@@ -41,3 +41,6 @@ test("<var>hello</var>", "𝓱𝓮𝓵𝓵𝓸");
 // subscript
 test("<sub>abcdefghijklmnopqrstuvwxyz</sub>", "ₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz");
 test("<sub>0123456789</sub>", "₀₁₂₃₄₅₆₇₈₉");
+
+// superscript
+test("<sup>0123456789+-=()ni</sup>", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ⁿⁱ");

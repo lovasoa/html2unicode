@@ -53,8 +53,9 @@ function html2unicode(html) {
 /**
  * Transform a text into italics or bold
  **/
-function transform(text, { bold, italics, mono, variable, sub }) {
+function transform(text, { bold, italics, mono, variable, sub, sup }) {
 	if (sub) text = subscript(text);
+	else if (sup) text = superscript(text);
 	else if (bold && italics) text = boldenAndItalicize(text);
 	else if (bold) text = bolden(text);
 	else if (italics) text = italicize(text);
@@ -149,6 +150,18 @@ CharTransform.subscriptTransform = [
 	new SingleCharTransform('x', 'ₓ'),
 ];
 
+CharTransform.superscriptTransform = [
+	new SingleCharTransform('1', '¹'),
+	new CharTransform('2', '3', '²'),
+	new DigitTransform('⁰'),
+	new CharTransform('(', ')', '⁽'),
+	new SingleCharTransform('+', '⁺'),
+	new SingleCharTransform('-', '⁻'),
+	new SingleCharTransform('=', '⁼'),
+	new SingleCharTransform('n', 'ⁿ'),
+	new SingleCharTransform('i', 'ⁱ'),
+];
+
 function transformator(transforms) {
 	return function transform(text) {
 		let codesBuffer = [];
@@ -168,10 +181,11 @@ const boldenAndItalicize = transformator(CharTransform.boldenAndItalicizeTransfo
 const monospace = transformator(CharTransform.monospaceTransform);
 const scriptize = transformator(CharTransform.scriptizeTransform);
 const subscript = transformator(CharTransform.subscriptTransform);
+const superscript = transformator(CharTransform.superscriptTransform);
 
 if (typeof module !== "undefined") {
 	module.exports = {
 		html2unicode, transform, bolden, italicize, boldenAndItalicize, monospace,
-		scriptize, subscript, 
+		scriptize, subscript, superscript,
 	};
 }
