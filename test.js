@@ -28,3 +28,8 @@ test("<i>0123456789</i>", "0123456789");
 test("<i><b>Hello, world!</b></i>", "𝙃𝙚𝙡𝙡𝙤, 𝙬𝙤𝙧𝙡𝙙!");
 test("normal <i>italics <b>bolditalics</b></i>", "normal 𝘪𝘵𝘢𝘭𝘪𝘤𝘴 𝙗𝙤𝙡𝙙𝙞𝙩𝙖𝙡𝙞𝙘𝙨");
 
+// monospace
+test("<pre>Hello, world!</pre>", "𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!");
+test("<code>Hello, world!</code>", "𝙷𝚎𝚕𝚕𝚘, 𝚠𝚘𝚛𝚕𝚍!");
+test("<code>Hello, <b>world</b>!</code>", "𝙷𝚎𝚕𝚕𝚘, 𝘄𝗼𝗿𝗹𝗱!");
+

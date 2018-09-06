@@ -6,7 +6,10 @@ const Saxophone = require('saxophone');
 function html2unicode(html) {
 	const chunks = [];
 	const parser = new Saxophone();
-	let tags = {"i": 0, "b": 0, "em":0, "strong": 0};
+	let tags = {
+		"i": 0, "b": 0, "em":0, "strong": 0, "pre": 0,
+		"code": 0, "tt": 0, "samp": 0, "kbd": 0, "var": 0,
+	};
 	parser.on('tagopen', ({ name, attrs, isSelfClosing }) => {
 		if (!isSelfClosing && tags.hasOwnProperty(name)) {
 			tags[name]++;
@@ -20,10 +23,14 @@ function html2unicode(html) {
 	const state = {
 		bold: false,
 		italics: false,
+		mono: false,
+		variable: false,
 	};
 	parser.on('text', ({ contents }) => {
-		state.bold = (tags.b || tags.strong) > 0;
-		state.italics = (tags.i || tags.em) > 0;
+		state.bold = tags.b>0 || tags.strong>0;
+		state.italics = tags.i>0 || tags.em>0;
+		state.mono = tags.code>0 || tags.tt>0 || tags.pre>0 || tags.samp>0 || tags.kbd>0;
+		state.variable = tags['var']>0;
 		chunks.push(transform(contents, state));
 	});
 	const result = new Promise((resolve, reject) => {
@@ -38,10 +45,11 @@ function html2unicode(html) {
 /**
  * Transform a text into italics or bold
  **/
-function transform(text, {bold, italics}) {
+function transform(text, { bold, italics, mono }) {
 	if (bold && italics) text = boldenAndItalicize(text);
 	else if (bold) text = bolden(text);
 	else if (italics) text = italicize(text);
+	else if (mono) text = monospace(text);
 	return text;
 }
 
@@ -97,6 +105,11 @@ CharTransform.boldenAndItalicizeTransform = [
 	new SmallLetterTransform('𝙖'),
 ];
 
+CharTransform.monospaceTransform = [
+	new CapitalLetterTransform('𝙰'),
+	new SmallLetterTransform('𝚊'),
+];
+
 function transformator(transforms) {
 	return function transform(text) {
 		let codesBuffer = [];
@@ -113,7 +126,8 @@ function transformator(transforms) {
 const bolden = transformator(CharTransform.boldenTransforms);
 const italicize = transformator(CharTransform.italicizeTransform);
 const boldenAndItalicize = transformator(CharTransform.boldenAndItalicizeTransform);
+const monospace = transformator(CharTransform.monospaceTransform);
 
 if (typeof module !== "undefined") {
-	module.exports = { html2unicode, transform, bolden, italicize };
+	module.exports = { html2unicode, transform, bolden, italicize, boldenAndItalicize, monospace };
 }
