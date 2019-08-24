@@ -1,6 +1,6 @@
 {
   "name": "html2unicode",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Convert HTML to unicode strings.",
   "repository": "https://github.com/lovasoa/html2unicode",
   "main": "src/index.js",
