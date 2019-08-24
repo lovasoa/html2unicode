@@ -1,6 +1,6 @@
 name: Publish to npm
 
-on: release
+on: [push, pull_request, release, create]
 
 jobs:
   build:
@@ -16,6 +16,7 @@ jobs:
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name == 'create' && startsWith(github.event_ref, 'v')
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
