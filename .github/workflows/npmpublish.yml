@@ -16,7 +16,6 @@ jobs:
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'create'
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -24,5 +23,6 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          if: github.event_name == 'create' && github.event.ref_type == 'tag'
+          env:
+            NODE_AUTH_TOKEN: ${{secrets.npm_token}}
